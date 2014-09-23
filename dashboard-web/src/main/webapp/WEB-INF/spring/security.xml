@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+           http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security-3.2.xsd
+    ">
+
+	<beans:bean id="cert" class="sys02.web.util.Cert" />
+	
+	<http use-expressions="true" pattern="/**" entry-point-ref="casEntryPoint">
+
+		<custom-filter after="CAS_FILTER" ref="clientFilter" />
+
+		<intercept-url pattern="/web/dashboard" access="isAuthenticated()" />
+
+	</http>
+
+	<authentication-manager alias="authenticationManager">
+		<authentication-provider ref="clientProvider" />
+	</authentication-manager>
+
+	<beans:bean id="clientProvider"
+		class="org.pac4j.springframework.security.authentication.ClientAuthenticationProvider">
+		<beans:property name="clients" ref="clients" />
+	</beans:bean>
+
+	<beans:bean id="clients" class="org.pac4j.core.client.Clients">
+		<beans:property name="callbackUrl"
+			value="${cas.callbackurl}" />
+		<beans:property name="clients">
+			<beans:list>
+				<beans:ref bean="casClient" />
+			</beans:list>
+		</beans:property>
+	</beans:bean>
+
+	<beans:bean id="casClient" class="org.pac4j.cas.client.CasClient">
+		<beans:property name="casLoginUrl" value="${cas.loginurl}" />
+		<beans:property name="casPrefixUrl" value="${cas.prefixurl}" />
+	</beans:bean>
+
+	<beans:bean id="servletContextAttributeExporter"
+		class="org.springframework.web.context.support.ServletContextAttributeExporter">
+		<beans:property name="attributes">
+			<beans:map>
+				<beans:entry key="CasClient" value-ref="casClient" />
+			</beans:map>
+		</beans:property>
+	</beans:bean>
+
+	<beans:bean id="casEntryPoint"
+		class="org.pac4j.springframework.security.web.ClientAuthenticationEntryPoint">
+		<beans:property name="client" ref="casClient" />
+	</beans:bean>
+
+	<beans:bean id="sas"
+		class="org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy" />
+
+	<beans:bean id="clientFilter"
+		class="org.pac4j.springframework.security.web.ClientAuthenticationFilter">
+		<beans:constructor-arg value="${cas.callback}" />
+		<beans:property name="clients" ref="clients" />
+		<beans:property name="sessionAuthenticationStrategy"
+			ref="sas" />
+		<beans:property name="authenticationManager" ref="authenticationManager" />
+	</beans:bean>
+
+</beans:beans>

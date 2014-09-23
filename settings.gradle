@@ -1,0 +1,7 @@
+[
+	'util',
+	'model',
+	'service',
+	'web'
+].each() { include "${rootProject.name}-${it}" }
+
