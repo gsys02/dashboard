@@ -3,6 +3,15 @@ function onMain(url) {
 }
 
 $(function() {
+	/*
+	 * Script para esconder los menus items de menubar de primefaces en iframe
+	 */
+	$('.ui-menu-list').hover(function() {
+	}, function() {
+		$('.ui-menu-child').hide();
+		$('.ui-menu-list li').removeClass('ui-menuitem-active');
+		$('.ui-menu-list li a').removeClass('ui-state-hover');
+	});
 
 	$('#f_menubar\\:user').click(function() {
 
