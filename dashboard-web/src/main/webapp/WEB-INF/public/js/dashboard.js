@@ -3,16 +3,24 @@ function onMain(url) {
 }
 
 $(function() {
+	
 	/*
-	 * Script para esconder los menus items de menubar de primefaces en iframe
+	 * Script para esconder los "menu items" de "menubar" de primefaces usando iframe
 	 */
-	$('.ui-menu-list').hover(function() {
+	$('#f_menubar .ui-menu-list').hover(function() {
 	}, function() {
-		$('.ui-menu-child').hide();
-		$('.ui-menu-list li').removeClass('ui-menuitem-active');
-		$('.ui-menu-list li a').removeClass('ui-state-hover');
+		$('#f_menubar .ui-menu-child').hide();
+		$('#f_menubar .ui-menu-list li').removeClass('ui-menuitem-active');
+		$('#f_menubar .ui-menu-list li a').removeClass('ui-state-hover');		
 	});
-
+	
+	$('#f_menubar\\:menu_user ul').hover(function() {
+	}, function() {		
+		$('#f_menubar\\:menu_user_menu').css('display','none');
+	});
+	
+	
+	
 	$('#f_menubar\\:user').click(function() {
 
 		$('#main').attr('src', 'http://www.w3schools.com/tags/tag_br.asp')
