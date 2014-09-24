@@ -8,7 +8,7 @@
 	template="/WEB-INF/flows/template.xhtml">
 
 	<ui:define name="menu">
-	
+
 		<h:form id="f_menubar">
 			<p:menubar>
 				<p:submenu label="Administración">
@@ -39,8 +39,12 @@
 					<p:menuButton value="User" id="menu_user">
 						<p:menuitem value="Mi perfil" icon="ui-icon-person"
 							actionListener="#{dashboard.ya}" />
+
 						<p:menuitem value="Acerca" icon="ui-icon-info"
 							onclick="onMain('http://gnextia.com/about')" />
+							
+						<p:menuitem value="Cerrar sesión" icon="ui-icon-power"
+							url="https://gnextia.com/cas/logout" />
 					</p:menuButton>
 				</f:facet>
 
@@ -51,16 +55,16 @@
 
 	<ui:define name="footer">
 	footer
-	<br/>
-	
-	<!-- 	
+	<br />
+
+		<!-- 	
 	session: ${session}
 	<br/>	
 	request: ${request}
 	<br/>
 	application: ${application}
 	 -->
-		
+
 	</ui:define>
 
 </ui:composition>
