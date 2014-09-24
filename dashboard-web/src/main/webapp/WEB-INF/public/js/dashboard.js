@@ -16,7 +16,8 @@ $(function() {
 	
 	$('#f_menubar\\:menu_user ul').hover(function() {
 	}, function() {		
-		$('#f_menubar\\:menu_user_menu').css('display','none');
+		$('#f_menubar\\:menu_user_menu').css('display','none');		
+		$('#f_menubar\\:menu_user_button').blur();
 	});
 	
 	
