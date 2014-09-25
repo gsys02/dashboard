@@ -9,12 +9,17 @@
     ">
 
 	<beans:bean id="cert" class="sys02.web.util.Cert" />
-	
+
 	<http use-expressions="true" pattern="/**" entry-point-ref="casEntryPoint">
 
 		<custom-filter after="CAS_FILTER" ref="clientFilter" />
 
+		<logout logout-url="/web/logout"
+			logout-success-url="https://gnextia.com/cas/logout"
+			delete-cookies="JSESSIONID" invalidate-session="true" />
+
 		<intercept-url pattern="/web/dashboard" access="isAuthenticated()" />
+
 
 	</http>
 
@@ -28,8 +33,7 @@
 	</beans:bean>
 
 	<beans:bean id="clients" class="org.pac4j.core.client.Clients">
-		<beans:property name="callbackUrl"
-			value="${cas.callbackurl}" />
+		<beans:property name="callbackUrl" value="${cas.callbackurl}" />
 		<beans:property name="clients">
 			<beans:list>
 				<beans:ref bean="casClient" />
