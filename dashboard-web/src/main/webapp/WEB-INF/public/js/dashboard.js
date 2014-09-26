@@ -1,5 +1,6 @@
 function onMain(url) {
-	$('#main').attr('src', url)
+	$('#main').attr('src', url);
+	$('#main').css("background-image","none");
 }
 
 $(function() {
